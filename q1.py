@@ -3,7 +3,8 @@ import json
 
 def findComLead(emp1, emp2, head, childpar):
     if emp1 == head or emp2 == head:
-        return "Leader not found"
+        print("Leader not found")
+        return [0, 0, 0]
     emp1anc = [emp1]
     emp2anc = [emp2]
 
@@ -23,12 +24,12 @@ def findComLead(emp1, emp2, head, childpar):
         i += 1
 
     if emp1anc[i-1] == emp1:
-        return emp1anc[i-2]
+        return [emp1anc[i-2], 1, len(emp2anc)-1 - (i - 2)]
 
     if emp2anc[i-1] == emp2:
-        return emp2anc[i-2]
+        return [emp2anc[i-2], len(emp1anc)-1 - (i - 2), 1]
 
-    return emp1anc[i-1]
+    return [emp1anc[i-1], len(emp1anc)-1 - (i - 2), len(emp2anc)-1 - (i - 2)]
 
 
 with open('org.json') as f:
@@ -44,4 +45,8 @@ for level in data.keys():
 
 emp1, emp2 = list(map(int, input().strip().split()))
 
-print(findComLead(emp1, emp2, head, childpar))
+result = findComLead(emp1, emp2, head, childpar)
+
+print(result[0])
+print(str(result[0]) + ' is ' + str(result[1]) + ' levels above ' + str(emp1))
+print(str(result[0]) + ' is ' + str(result[2]) + ' levels above ' + str(emp2))
