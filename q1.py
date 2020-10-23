@@ -1,47 +1,34 @@
 import json
 
 
-def findComLeadUtil(emp1, emp2, parchild, root):
-    if root == None:
-        return [None, None]
+def findComLead(emp1, emp2, head, childpar):
+    if emp1 == head or emp2 == head:
+        return "Leader not found"
+    emp1anc = [emp1]
+    emp2anc = [emp2]
 
-    if root == emp1:
-        return [root, None]
+    while emp1anc[-1] != head or emp2anc[-1] != head:
+        curhead1 = emp1anc[-1]
+        curhead2 = emp2anc[-1]
+        if curhead1 != head:
+            emp1anc.append(childpar[curhead1])
+        if curhead2 != head:
+            emp2anc.append(childpar[curhead2])
 
-    if root == emp2:
-        return [None, root]
+    emp1anc.reverse()
+    emp2anc.reverse()
 
-    if root not in parchild.keys():
-        return [None, None]
+    i = 0
+    while i < len(emp1anc) and i < len(emp2anc) and emp1anc[i] == emp2anc[i]:
+        i += 1
 
-    founde1 = None
-    founde2 = None
+    if emp1anc[i-1] == emp1:
+        return emp1anc[i-2]
 
-    for child in parchild[root]:
-        emp1inroot, emp2inroot = findComLeadUtil(emp1, emp2, parchild, child)
-        if emp1inroot != None and emp1inroot == emp2inroot:
-            return [emp1inroot, emp2inroot]
-        if emp1inroot:
-            founde1 = emp1inroot
-        if emp2inroot:
-            founde2 = emp2inroot
-        if founde1 and founde2:
-            return [root, root]
+    if emp2anc[i-1] == emp2:
+        return emp2anc[i-2]
 
-    if founde1 != None:
-        return [founde1, None]
-    elif founde2 != None:
-        return [None, founde2]
-    else:
-        return [None, None]
-
-
-def findComLead(emp1, emp2, parchild, root):
-    result = findComLeadUtil(emp1, emp2, parchild, root)
-    if result[0] != None:
-        return result[0]
-    else:
-        return result[1]
+    return emp1anc[i-1]
 
 
 with open('org.json') as f:
@@ -49,19 +36,12 @@ with open('org.json') as f:
 
 head = data.pop('L0')[0]['name']
 
-parchild = {head: []}
+childpar = {}
 
-# go through all levels 1 by 1
 for level in data.keys():
-    # go through all pairs 1 by 1
     for pair in data[level]:
+        childpar[pair['name']] = pair['parent']
 
-        # in dictionary make parent as key and children are list of values
-        if pair['parent'] not in parchild.keys():
-            parchild[pair['parent']] = []
-        parchild[pair['parent']].append(pair['name'])
+emp1, emp2 = list(map(int, input().strip().split()))
 
-emp1 = int(input())
-emp2 = int(input())
-
-print(findComLead(emp1, emp2, parchild, head))
+print(findComLead(emp1, emp2, head, childpar))
