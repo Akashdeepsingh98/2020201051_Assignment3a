@@ -1,5 +1,5 @@
 import ast
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def myKey(t):
@@ -19,8 +19,52 @@ def preprocess(emp):
         newemp[temp].sort(key=myKey)
     return newemp
 
+
+def remUnnDat(emp1, emp2):
+    for key in emp2.keys():
+        if key not in emp1.keys():
+            emp2.pop(key)
+
+    for key in emp1.keys():
+        if key not in emp2.keys():
+            emp1.pop(key)
+
+    return emp1, emp2
+
+
+def getFreeTime(emp, dur):
+    for key in emp.keys():
+        start = datetime.combine(
+            key, datetime.strptime('9:00AM', '%I:%M%p').time())
+        end = datetime.combine(
+            key, datetime.strptime('5:00PM', '%I:%M%p').time())
+        slots = []
+        for interval in emp[key]:
+            if datetime.combine(key, interval[0]) == start:
+                start = datetime.combine(key, interval[1])
+                continue
+            else:
+                length = (end-start).min
+                if length >= timedelta(minutes=dur):
+                    slotstart = start
+                    while slotstart + timedelta(minutes=dur) < end:
+                        slots.append(
+                            [slotstart, slotstart+timedelta(minutes=dur)])
+                        slotstart = slotstart + timedelta(minutes=dur)
+                    #slots.append([start, interval[0]])
+            start = datetime.combine(key, interval[1])
+        if start != end:
+            slots.append([start, end])
+        emp[key] = slots
+    return emp
+
+
 emp1 = {}
 emp2 = {}
+
+dur = float(input())
+dur = dur*60  # converted to minutes
+
 with open('Employee1.txt') as f:
     contents = f.read()
     emp1 = ast.literal_eval(contents)
@@ -40,5 +84,8 @@ print(emp2)
 
 emp1, emp2 = remUnnDat(emp1, emp2)
 
-#emp1 = getFreeTime(emp1)
-#emp2 = getFreeTime(emp2)
+emp1 = getFreeTime(emp1, dur)
+emp2 = getFreeTime(emp2, dur)
+
+print(emp1)
+print(emp2)
