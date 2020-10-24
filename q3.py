@@ -199,11 +199,11 @@ emp1, emp2 = remUnnDat(emp1, emp2)
 emp1 = getFreeTime(emp1, 30)
 emp2 = getFreeTime(emp2, 30)
 
-#print(emp1)
-#print(emp2)
+# print(emp1)
+# print(emp2)
 
 #print('result is ')
 freetime = matchFree(emp1, emp2, dur)
 
-with open('output.txt','w') as f:
+with open('output.txt', 'w') as f:
     f.write(json.dumps(freetime))
