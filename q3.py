@@ -47,7 +47,7 @@ def getFreeTime(emp, dur):
             else:
                 length = (datetime.combine(key, interval[0])-start).seconds//60
                 if length >= dur:
-                    if length>maximum:
+                    if length > maximum:
                         maximum = length
                     slotstart = start
                     while slotstart + timedelta(minutes=dur) <= datetime.combine(key, interval[0]):
@@ -58,7 +58,7 @@ def getFreeTime(emp, dur):
         if start != end:
             length = (end-start).seconds//60
             if length >= dur:
-                if length>maximum:
+                if length > maximum:
                     maximum = length
                 slotstart = start
                 while slotstart + timedelta(minutes=dur) <= end:
@@ -74,7 +74,7 @@ def matchFreeUtil(emp1, emp2, dur):
     numSlots = dur//30
     done = 0
     result = {}
-    if dur> emp1['max'] or dur>emp2['max']:
+    if dur > emp1['max'] or dur > emp2['max']:
         return 0
     emp1['max'].pop()
     emp2['max'].pop()
@@ -155,7 +155,7 @@ def matchFreeUtil(emp1, emp2, dur):
 
 def matchFree(emp1, emp2, dur):
     temp = matchFreeUtil(emp1, emp2, dur)
-    if temp==0:
+    if temp == 0:
         return "No slots of this duration possible"
     result = {}
     for day in temp.keys():
