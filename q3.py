@@ -39,6 +39,7 @@ def getFreeTime(emp, dur):
         end = datetime.combine(
             key, datetime.strptime('5:00PM', '%I:%M%p').time())
         slots = []
+        maximum = 0
         for interval in emp[key]:
             if datetime.combine(key, interval[0]) == start:
                 start = datetime.combine(key, interval[1])
@@ -46,6 +47,8 @@ def getFreeTime(emp, dur):
             else:
                 length = (datetime.combine(key, interval[0])-start).seconds//60
                 if length >= dur:
+                    if length>maximum:
+                        maximum = length
                     slotstart = start
                     while slotstart + timedelta(minutes=dur) <= datetime.combine(key, interval[0]):
                         slots.append(
@@ -55,12 +58,15 @@ def getFreeTime(emp, dur):
         if start != end:
             length = (end-start).seconds//60
             if length >= dur:
+                if length>maximum:
+                    maximum = length
                 slotstart = start
                 while slotstart + timedelta(minutes=dur) <= end:
                     slots.append(
                         [slotstart.time(), (slotstart+timedelta(minutes=dur)).time()])
                     slotstart = slotstart + timedelta(minutes=dur)
         emp[key] = slots
+    emp['max'] = maximum
     return emp
 
 
@@ -68,6 +74,10 @@ def matchFreeUtil(emp1, emp2, dur):
     numSlots = dur//30
     done = 0
     result = {}
+    if dur> emp1['max'] or dur>emp2['max']:
+        return 0
+    emp1['max'].pop()
+    emp2['max'].pop()
     for day in emp1.keys():
         i = 0
         j = 0
@@ -94,8 +104,8 @@ def matchFreeUtil(emp1, emp2, dur):
                             result[day] = []
                 if done == numSlots:
                     return result
-                i+=1
-                j+=1
+                i += 1
+                j += 1
         while i < len(emp1[day]):
             if datetime.combine(day, emp1[day][i][0]) < datetime.combine(day, emp2[day][j][0]):
                 i += 1
@@ -117,7 +127,7 @@ def matchFreeUtil(emp1, emp2, dur):
                             result[day] = []
                 if done == numSlots:
                     return result
-                i+=1
+                i += 1
         while j < len(emp2[day]):
             if datetime.combine(day, emp1[day][i][0]) > datetime.combine(day, emp2[day][j][0]):
                 j += 1
@@ -139,16 +149,24 @@ def matchFreeUtil(emp1, emp2, dur):
                             result[day] = []
                 if done == numSlots:
                     return result
-                j+=1
+                j += 1
     return result
 
 
 def matchFree(emp1, emp2, dur):
-    result = matchFreeUtil(emp1, emp2, dur)
-    for day in result.keys():
-        start = result[day][0][0]
-        end = result[day][-1][1]
-        result[day] = [start, end]
+    temp = matchFreeUtil(emp1, emp2, dur)
+    if temp==0:
+        return "No slots of this duration possible"
+    result = {}
+    for day in temp.keys():
+        if len(temp[day]) == 0:
+            continue
+        else:
+            start = temp[day][0][0]
+            end = temp[day][-1][1]
+            temp[day] = [start, end]
+            result[str(day.day) + '/' + str(day.month) + '/' + str(day.year)] = [datetime.strftime(datetime.combine(
+                day, start), '%I:%M%p')+' - ' + datetime.strftime(datetime.combine(day, end), '%I:%M%p')]
     return result
 
 
@@ -172,8 +190,8 @@ emp2 = emp2['Employee2']
 emp1 = preprocess(emp1)
 emp2 = preprocess(emp2)
 
-#print(emp1)
-#print(emp2)
+# print(emp1)
+# print(emp2)
 
 emp1, emp2 = remUnnDat(emp1, emp2)
 
