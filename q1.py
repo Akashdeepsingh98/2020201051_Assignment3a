@@ -43,10 +43,11 @@ for level in data.keys():
     for pair in data[level]:
         childpar[pair['name']] = pair['parent']
 
-emp1, emp2 = list(map(int, input().strip().split()))
+emp1, emp2 = input().strip().split()
 
 result = findComLead(emp1, emp2, head, childpar)
 
-print(result[0])
-print(str(result[0]) + ' is ' + str(result[1]) + ' levels above ' + str(emp1))
-print(str(result[0]) + ' is ' + str(result[2]) + ' levels above ' + str(emp2))
+if result!=[0,0,0]:
+    print(result[0])
+    print(str(result[0]) + ' is ' + str(result[1]) + ' levels above ' + str(emp1))
+    print(str(result[0]) + ' is ' + str(result[2]) + ' levels above ' + str(emp2))

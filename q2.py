@@ -65,11 +65,12 @@ date2 = date2[1:]
 
 date1 = prepare(date1)
 date2 = prepare(date2)
-#print(date1)
-#print(date2)
+
 dist1 = distance(date1)
 dist2 = distance(date2)
-print(dist1)
-print(dist2)
 
-print(abs(dist1-dist2))
+with open('output.txt','w') as f:
+    if abs(dist1-dist2)==1:
+        f.write('Date Difference: ' + str(abs(dist1-dist2)) + ' Day')    
+    else:
+        f.write('Date Difference: ' + str(abs(dist1-dist2)) + ' Days')

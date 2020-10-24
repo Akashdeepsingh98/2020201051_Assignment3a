@@ -76,7 +76,7 @@ def matchFreeUtil(emp1, emp2, dur):
     done = 0
     result = {}
     if dur > emp1['max'] or dur > emp2['max']:
-        return 0
+        return None
     emp1.pop('max')
     emp2.pop('max')
     for day in emp1.keys():
@@ -156,8 +156,10 @@ def matchFreeUtil(emp1, emp2, dur):
 
 def matchFree(emp1, emp2, dur):
     temp = matchFreeUtil(emp1, emp2, dur)
-    if temp == 0:
-        return "No slots of this duration possible"
+    if temp == None:
+        with open('output.txt', 'w') as f:
+            f.write('no slot available')
+        return
     result = {}
     for day in temp.keys():
         if len(temp[day]) == 0:
@@ -168,7 +170,12 @@ def matchFree(emp1, emp2, dur):
             temp[day] = [start, end]
             result[str(day.day) + '/' + str(day.month) + '/' + str(day.year)] = [datetime.strftime(datetime.combine(
                 day, start), '%I:%M%p')+' - ' + datetime.strftime(datetime.combine(day, end), '%I:%M%p')]
-    return result
+    if len(result.keys())==0:
+        with open('output.txt', 'w') as f:
+            f.write('no slot available')
+    else:
+        with open('output.txt', 'w') as f:
+            f.write(json.dumps(result))
 
 
 emp1 = {}
@@ -191,19 +198,9 @@ emp2 = emp2['Employee2']
 emp1 = preprocess(emp1)
 emp2 = preprocess(emp2)
 
-# print(emp1)
-# print(emp2)
-
 emp1, emp2 = remUnnDat(emp1, emp2)
 
 emp1 = getFreeTime(emp1, 30)
 emp2 = getFreeTime(emp2, 30)
 
-# print(emp1)
-# print(emp2)
-
-#print('result is ')
-freetime = matchFree(emp1, emp2, dur)
-
-with open('output.txt', 'w') as f:
-    f.write(json.dumps(freetime))
+matchFree(emp1, emp2, dur)
