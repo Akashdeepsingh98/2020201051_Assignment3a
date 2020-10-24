@@ -1,5 +1,6 @@
 import ast
 from datetime import datetime, timedelta
+import json
 
 
 def myKey(t):
@@ -76,8 +77,8 @@ def matchFreeUtil(emp1, emp2, dur):
     result = {}
     if dur > emp1['max'] or dur > emp2['max']:
         return 0
-    emp1['max'].pop()
-    emp2['max'].pop()
+    emp1.pop('max')
+    emp2.pop('max')
     for day in emp1.keys():
         i = 0
         j = 0
@@ -198,8 +199,11 @@ emp1, emp2 = remUnnDat(emp1, emp2)
 emp1 = getFreeTime(emp1, 30)
 emp2 = getFreeTime(emp2, 30)
 
-print(emp1)
-print(emp2)
+#print(emp1)
+#print(emp2)
 
-print('result is ')
-print(matchFree(emp1, emp2, dur))
+#print('result is ')
+freetime = matchFree(emp1, emp2, dur)
+
+with open('output.txt','w') as f:
+    f.write(json.dumps(freetime))
