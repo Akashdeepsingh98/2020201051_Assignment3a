@@ -17,7 +17,7 @@ xyz is n levels above emp2
 
 ## Question 2
 - Input file will be `date_calculator.txt` as stated in assignment document.
--  Possible formats for dates as stated on Moodle:
+- Possible formats for dates as stated on Moodle:
 <br>
 10th September, 2020
 <br>
@@ -51,4 +51,6 @@ Date Difference: 3 Days
 - If no slots available then write `no slot available`.
 - Output.txt example:
 <br>
-{"5/10/2020" : ["9:00AM - 9:30AM"]}
+Slot Duration: 0.5 hrs
+<br>
+{"5/10/2020": ["09:00AM - 09:30AM"]}

@@ -1,2 +1,2 @@
-Slot Duration: 0.5 hrs
-{"5/10/2020": ["09:00AM - 09:30AM"]}
+Slot Duration: 3.0 hrs
+no slot available
