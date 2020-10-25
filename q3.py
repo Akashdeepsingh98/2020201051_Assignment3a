@@ -155,9 +155,11 @@ def matchFreeUtil(emp1, emp2, dur):
 
 
 def matchFree(emp1, emp2, dur):
+    with open('output.txt', 'w') as f:
+        f.write('Slot Duration: ' + str(dur/60) + ' hrs\n')
     temp = matchFreeUtil(emp1, emp2, dur)
     if temp == None:
-        with open('output.txt', 'w') as f:
+        with open('output.txt', 'a') as f:
             f.write('no slot available')
         return
     result = {}
@@ -171,10 +173,10 @@ def matchFree(emp1, emp2, dur):
             result[str(day.day) + '/' + str(day.month) + '/' + str(day.year)] = [datetime.strftime(datetime.combine(
                 day, start), '%I:%M%p')+' - ' + datetime.strftime(datetime.combine(day, end), '%I:%M%p')]
     if len(result.keys())==0:
-        with open('output.txt', 'w') as f:
+        with open('output.txt', 'a') as f:
             f.write('no slot available')
     else:
-        with open('output.txt', 'w') as f:
+        with open('output.txt', 'a') as f:
             f.write(json.dumps(result))
 
 
@@ -192,8 +194,11 @@ with open('Employee2.txt') as f:
     contents = f.read()
     emp2 = ast.literal_eval(contents)
 
-emp1 = emp1['Employee1']
-emp2 = emp2['Employee2']
+for e in emp1.keys():
+    emp1 = emp1[e]
+
+for e in emp2.keys():
+    emp2 = emp2[e]
 
 emp1 = preprocess(emp1)
 emp2 = preprocess(emp2)
