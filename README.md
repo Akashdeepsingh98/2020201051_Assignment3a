@@ -45,6 +45,8 @@ Date Difference: 1 Day
 <br>
 Date Difference: 3 Days
 
+- The `absolute` difference between the dates is stored.
+
 ## Question 3
 - Input format is as stated in assignment document.
 - User must input `slot duration` from `command line` in multiples of `0.5` as stated on Moodle (0.5, 1, 1.5 etc).
