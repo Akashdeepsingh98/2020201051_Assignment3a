@@ -84,24 +84,58 @@ def isTimeOverlap(start1, end1, start2, end2):
     return False
 
 
-def getFirstFreeSlot(employeelist, duration):
+def getFirstFreeSlot2(employeelist, duration):
 
     emp1name = list(employeelist[0].keys())[0]
 
     for emp1day in employeelist[0][emp1name].keys():
         emp2name = list(employeelist[1].keys())[0]
         for emp2day in employeelist[1][emp2name].keys():
-            for emp1slot in employeelist[0][emp1name][emp1day]:
-                for emp2slot in employeelist[1][emp2name][emp2day]:
-                    if isTimeOverlap(emp1slot[0], emp1slot[1], emp2slot[0], emp2slot[1]):
-                        temp = [emp1slot[0], emp1slot[1],
-                                emp2slot[0], emp2slot[1]]
-                        temp.sort()
-                        start = temp[1]
-                        end = temp[2]
-                        delta = end - start
-                        if (delta.total_seconds()) / 60 >= duration:
-                            return [start, start + timedelta(minutes=duration)]
+            if emp1day == emp2day:
+                for emp1slot in employeelist[0][emp1name][emp1day]:
+                    for emp2slot in employeelist[1][emp2name][emp2day]:
+                        if isTimeOverlap(emp1slot[0], emp1slot[1], emp2slot[0], emp2slot[1]):
+                            temp = [emp1slot[0], emp1slot[1],
+                                    emp2slot[0], emp2slot[1]]
+                            temp.sort()
+                            start = temp[1]
+                            end = temp[2]
+                            delta = end - start
+                            if (delta.total_seconds()) / 60 >= duration:
+                                return [start, start + timedelta(minutes=duration)]
+    return 'no slot available'
+
+
+def getFirstFreeSlot3(employeelist, duration):
+    emp1name = list(employeelist[0].keys())[0]
+
+    for emp1day in employeelist[0][emp1name].keys():
+        emp2name = list(employeelist[1].keys())[0]
+        for emp2day in employeelist[1][emp2name].keys():
+            if emp1day == emp2day:
+                for emp1slot in employeelist[0][emp1name][emp1day]:
+                    for emp2slot in employeelist[1][emp2name][emp2day]:
+                        if isTimeOverlap(emp1slot[0], emp1slot[1], emp2slot[0], emp2slot[1]):
+                            temp12 = [emp1slot[0], emp1slot[1],
+                                      emp2slot[0], emp2slot[1]]
+                            temp12.sort()
+                            start12 = temp12[1]
+                            end12 = temp12[2]
+                            delta12 = end12-start12
+                            if(delta12.total_seconds()/60) >= duration:
+                                emp3name = list(employeelist[2].keys())[0]
+                                for emp3day in employeelist[2][emp3name].keys():
+                                    if emp1day == emp3day:
+                                        for emp3slot in employeelist[2][emp3name][emp3day]:
+                                            if isTimeOverlap(start12, end12, emp3slot[0], emp3slot[1]):
+                                                temp123 = [
+                                                    start12, end12, emp3slot[0], emp3slot[1]]
+                                                temp123.sort()
+                                                start123 = temp123[1]
+                                                end123 = temp123[2]
+                                                delta123 = end123-start123
+                                                if (delta123.total_seconds()/60) >= duration:
+                                                    return [start123, start123 + timedelta(minutes=duration)]
 
 
 if __name__ == '__main__':
@@ -116,4 +150,4 @@ if __name__ == '__main__':
     employeelist = getFreeSlots(employeelist)
     print(employeelist)
 
-    print(getFirstFreeSlot(employeelist, 30))
+    print(getFirstFreeSlot3(employeelist, 30))
