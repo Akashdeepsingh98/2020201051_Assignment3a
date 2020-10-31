@@ -1,6 +1,6 @@
 import os
 import ast
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def prepEmp(employee):
@@ -68,6 +68,42 @@ def getFreeSlots(employeelist):
     return result
 
 
+def isTimeOverlap(start1, end1, start2, end2):
+    if start1 < start2 and start2 < end1 and end1 < end2:
+        return True
+
+    if start2 < start1 and start1 < end2 and end2 < end1:
+        return True
+
+    if start2 <= start1 and end1 <= end2:
+        return True
+
+    if start1 <= start2 and end2 <= end1:
+        return True
+
+    return False
+
+
+def getFirstFreeSlot(employeelist, duration):
+
+    emp1name = list(employeelist[0].keys())[0]
+
+    for emp1day in employeelist[0][emp1name].keys():
+        emp2name = list(employeelist[1].keys())[0]
+        for emp2day in employeelist[1][emp2name].keys():
+            for emp1slot in employeelist[0][emp1name][emp1day]:
+                for emp2slot in employeelist[1][emp2name][emp2day]:
+                    if isTimeOverlap(emp1slot[0], emp1slot[1], emp2slot[0], emp2slot[1]):
+                        temp = [emp1slot[0], emp1slot[1],
+                                emp2slot[0], emp2slot[1]]
+                        temp.sort()
+                        start = temp[1]
+                        end = temp[2]
+                        delta = end - start
+                        if (delta.total_seconds()) / 60 >= duration:
+                            return [start, start + timedelta(minutes=duration)]
+
+
 if __name__ == '__main__':
     employeelist = readFiles('employees')
     print(employeelist)
@@ -79,3 +115,5 @@ if __name__ == '__main__':
     print()
     employeelist = getFreeSlots(employeelist)
     print(employeelist)
+
+    print(getFirstFreeSlot(employeelist, 30))
