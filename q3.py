@@ -137,6 +137,113 @@ def getFirstFreeSlot3(employeelist, duration):
                                                 if (delta123.total_seconds()/60) >= duration:
                                                     return [start123, start123 + timedelta(minutes=duration)]
 
+    return 'no slot available'
+
+
+def getFirstFreeSlot4(employeelist, duration):
+    emp1name = list(employeelist[0].keys())[0]
+
+    for emp1day in employeelist[0][emp1name].keys():
+        emp2name = list(employeelist[1].keys())[0]
+        for emp2day in employeelist[1][emp2name].keys():
+            if emp1day == emp2day:
+                for emp1slot in employeelist[0][emp1name][emp1day]:
+                    for emp2slot in employeelist[1][emp2name][emp2day]:
+                        if isTimeOverlap(emp1slot[0], emp1slot[1], emp2slot[0], emp2slot[1]):
+                            temp12 = [emp1slot[0], emp1slot[1],
+                                      emp2slot[0], emp2slot[1]]
+                            temp12.sort()
+                            start12 = temp12[1]
+                            end12 = temp12[2]
+                            delta12 = end12-start12
+                            if(delta12.total_seconds()/60) >= duration:
+                                emp3name = list(employeelist[2].keys())[0]
+                                for emp3day in employeelist[2][emp3name].keys():
+                                    if emp1day == emp3day:
+                                        for emp3slot in employeelist[2][emp3name][emp3day]:
+                                            if isTimeOverlap(start12, end12, emp3slot[0], emp3slot[1]):
+                                                temp123 = [
+                                                    start12, end12, emp3slot[0], emp3slot[1]]
+                                                temp123.sort()
+                                                start123 = temp123[1]
+                                                end123 = temp123[2]
+                                                delta123 = end123-start123
+                                                if (delta123.total_seconds()/60) >= duration:
+                                                    emp4name = list(
+                                                        employeelist[3].keys())[0]
+                                                    for emp4day in employeelist[3][emp4name].keys():
+                                                        if emp4day == emp1day:
+                                                            for emp4slot in employeelist[3][emp4name][emp4day]:
+                                                                if isTimeOverlap(start123, end123, emp4slot[0], emp4slot[1]):
+                                                                    temp1234 = [
+                                                                        start123, end123, emp4slot[0], emp4slot[1]]
+                                                                    temp1234.sort()
+                                                                    start1234 = temp1234[1]
+                                                                    end1234 = temp1234[2]
+                                                                    delta1234 = end1234-start1234
+                                                                    if (delta1234.total_seconds()/60) >= duration:
+                                                                        return [start1234, start1234 + timedelta(minutes=duration)]
+    return 'no slot available'
+
+
+def getFirstFreeSlot5(employeelist, duration):
+    emp1name = list(employeelist[0].keys())[0]
+
+    for emp1day in employeelist[0][emp1name].keys():
+        emp2name = list(employeelist[1].keys())[0]
+        for emp2day in employeelist[1][emp2name].keys():
+            if emp1day == emp2day:
+                for emp1slot in employeelist[0][emp1name][emp1day]:
+                    for emp2slot in employeelist[1][emp2name][emp2day]:
+                        if isTimeOverlap(emp1slot[0], emp1slot[1], emp2slot[0], emp2slot[1]):
+                            temp12 = [emp1slot[0], emp1slot[1],
+                                      emp2slot[0], emp2slot[1]]
+                            temp12.sort()
+                            start12 = temp12[1]
+                            end12 = temp12[2]
+                            delta12 = end12-start12
+                            if(delta12.total_seconds()/60) >= duration:
+                                emp3name = list(employeelist[2].keys())[0]
+                                for emp3day in employeelist[2][emp3name].keys():
+                                    if emp1day == emp3day:
+                                        for emp3slot in employeelist[2][emp3name][emp3day]:
+                                            if isTimeOverlap(start12, end12, emp3slot[0], emp3slot[1]):
+                                                temp123 = [
+                                                    start12, end12, emp3slot[0], emp3slot[1]]
+                                                temp123.sort()
+                                                start123 = temp123[1]
+                                                end123 = temp123[2]
+                                                delta123 = end123-start123
+                                                if (delta123.total_seconds()/60) >= duration:
+                                                    emp4name = list(
+                                                        employeelist[3].keys())[0]
+                                                    for emp4day in employeelist[3][emp4name].keys():
+                                                        if emp4day == emp1day:
+                                                            for emp4slot in employeelist[3][emp4name][emp4day]:
+                                                                if isTimeOverlap(start123, end123, emp4slot[0], emp4slot[1]):
+                                                                    temp1234 = [
+                                                                        start123, end123, emp4slot[0], emp4slot[1]]
+                                                                    temp1234.sort()
+                                                                    start1234 = temp1234[1]
+                                                                    end1234 = temp1234[2]
+                                                                    delta1234 = end1234-start1234
+                                                                    if (delta1234.total_seconds()/60) >= duration:
+                                                                        emp5name = list(
+                                                                            employeelist[4].keys())[0]
+                                                                        for emp5day in employeelist[4][emp5name].keys():
+                                                                            if emp5day == emp1day:
+                                                                                for emp5slot in employeelist[4][emp5name][emp5day]:
+                                                                                    if isTimeOverlap(start1234, end1234, emp5slot[0], emp5slot[1]):
+                                                                                        temp12345 = [
+                                                                                            start1234, end1234, emp5slot[0], emp5slot[1]]
+                                                                                        temp12345.sort()
+                                                                                        start12345 = temp12345[1]
+                                                                                        end12345 = temp12345[2]
+                                                                                        delta12345 = end12345-start12345
+                                                                                        if (delta12345.total_seconds()/60) >= duration:
+                                                                                            return [start12345, start12345 + timedelta(minutes=duration)]
+    return 'no slot available'
+
 
 if __name__ == '__main__':
     employeelist = readFiles('employees')
