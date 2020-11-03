@@ -1,6 +1,7 @@
 import os
 import ast
 from datetime import datetime, timedelta
+import json
 
 
 def prepEmp(employee):
@@ -271,15 +272,10 @@ def readableFree(employeelist):
 
 if __name__ == '__main__':
     employeelist = readFiles('employees')
-    #print(employeelist)
 
-    print()
     employeelist = preprocess(employeelist)
-    #print(employeelist)
 
-    print()
     employeelist = getFreeSlots(employeelist)
-    print(employeelist)
 
     duration = float(input())*60
 
@@ -292,6 +288,17 @@ if __name__ == '__main__':
     elif len(employeelist) == 5:
         result = getFirstFreeSlot5(employeelist, duration)
 
-    print()
     rdblfreeslots = readableFree(employeelist)
-    print(rdblfreeslots)
+
+    with open('output.txt', 'w') as f:
+        f.write('Available slots: \n')
+        for emp in rdblfreeslots:
+            f.write(json.dumps(emp))
+            f.write('\n')
+        f.write('\nSlot duration: ' + str(duration/60)+' hrs\n')
+        freedict = {}
+        freedate = result[0].strftime('%d/%m/%Y')
+        freestart = result[1].strftime('%I:%M%p')
+        freeend = result[2].strftime('%I:%M%p')
+        freedict[freedate] = [freestart+' - '+freeend]
+        f.write(json.dumps(freedict))
