@@ -102,7 +102,7 @@ def getFirstFreeSlot2(employeelist, duration):
                             end = temp[2]
                             delta = end - start
                             if (delta.total_seconds()) / 60 >= duration:
-                                return [start, start + timedelta(minutes=duration)]
+                                return [emp1day, start, start + timedelta(minutes=duration)]
     return 'no slot available'
 
 
@@ -135,7 +135,7 @@ def getFirstFreeSlot3(employeelist, duration):
                                                 end123 = temp123[2]
                                                 delta123 = end123-start123
                                                 if (delta123.total_seconds()/60) >= duration:
-                                                    return [start123, start123 + timedelta(minutes=duration)]
+                                                    return [emp1day, start123, start123 + timedelta(minutes=duration)]
 
     return 'no slot available'
 
@@ -182,7 +182,7 @@ def getFirstFreeSlot4(employeelist, duration):
                                                                     end1234 = temp1234[2]
                                                                     delta1234 = end1234-start1234
                                                                     if (delta1234.total_seconds()/60) >= duration:
-                                                                        return [start1234, start1234 + timedelta(minutes=duration)]
+                                                                        return [emp1day, start1234, start1234 + timedelta(minutes=duration)]
     return 'no slot available'
 
 
@@ -241,20 +241,57 @@ def getFirstFreeSlot5(employeelist, duration):
                                                                                         end12345 = temp12345[2]
                                                                                         delta12345 = end12345-start12345
                                                                                         if (delta12345.total_seconds()/60) >= duration:
-                                                                                            return [start12345, start12345 + timedelta(minutes=duration)]
+                                                                                            return [emp1day, start12345, start12345 + timedelta(minutes=duration)]
     return 'no slot available'
+
+
+def getReadblFree(employee):
+    empname = list(employee.keys())[0]
+    dictforemp = {}
+    dictforemp[empname] = {}
+    for aday in employee[empname].keys():
+        newdaylabel = aday.strftime('%d/%m/%Y')
+        newlist = []
+        for slot in employee[empname][aday]:
+            start = slot[0]
+            end = slot[1]
+            newstart = start.strftime('%I:%M%p')
+            newend = end.strftime('%I:%M%p')
+            newlist.append(newstart + ' - ' + newend)
+        dictforemp[empname][newdaylabel] = newlist
+    return dictforemp
+
+
+def readableFree(employeelist):
+    result = []
+    for employee in employeelist:
+        result.append(getReadblFree(employee))
+    return result
 
 
 if __name__ == '__main__':
     employeelist = readFiles('employees')
-    print(employeelist)
+    #print(employeelist)
 
     print()
     employeelist = preprocess(employeelist)
-    print(employeelist)
+    #print(employeelist)
 
     print()
     employeelist = getFreeSlots(employeelist)
     print(employeelist)
 
-    print(getFirstFreeSlot3(employeelist, 30))
+    duration = float(input())*60
+
+    if len(employeelist) == 2:
+        result = getFirstFreeSlot2(employeelist, duration)
+    elif len(employeelist) == 3:
+        result = getFirstFreeSlot3(employeelist, duration)
+    elif len(employeelist) == 4:
+        result = getFirstFreeSlot4(employeelist, duration)
+    elif len(employeelist) == 5:
+        result = getFirstFreeSlot5(employeelist, duration)
+
+    print()
+    rdblfreeslots = readableFree(employeelist)
+    print(rdblfreeslots)
