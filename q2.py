@@ -33,7 +33,7 @@ def prepare(date):
             if len(temp) == 3:
                 temp = list(map(int, temp))
                 dfmt = input()
-                if dfmt[0] == 'm':
+                if dfmt[0] == 'm' or dfmt[0] == 'M':
                     temp[0], temp[1] = temp[1], temp[0]
                 break
         return temp
