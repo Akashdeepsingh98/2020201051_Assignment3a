@@ -192,47 +192,47 @@ if __name__ == '__main__':
     if int(bunch[0]) == 2:
         result = findComLead2(bunch[1], bunch[2], head, childpar)
         if result != 0:
-            print(result[0])
-            print(str(result[0]) + ' is ' + str(result[1]-1) +
+            print('common leader: ' + result[0])
+            print('leader ' + str(result[0]) + ' is ' + str(result[1]-1) +
                   ' levels above ' + str(bunch[1]))
-            print(str(result[0]) + ' is ' + str(result[2]-1) +
+            print('leader ' + str(result[0]) + ' is ' + str(result[2]-1) +
                   ' levels above ' + str(bunch[2]))
     elif int(bunch[0]) == 3:
         result = findComLead3(bunch[1], bunch[2], bunch[3], head, childpar)
         if result != 0:
-            print(result[0])
-            print(str(result[0]) + ' is ' + str(result[1]-1) +
+            print('common leader: ' + result[0])
+            print('leader ' + str(result[0]) + ' is ' + str(result[1]-1) +
                   ' levels above ' + str(bunch[1]))
-            print(str(result[0]) + ' is ' + str(result[2]-1) +
+            print('leader ' + str(result[0]) + ' is ' + str(result[2]-1) +
                   ' levels above ' + str(bunch[2]))
-            print(str(result[0]) + ' is ' + str(result[3]-1) +
+            print('leader ' + str(result[0]) + ' is ' + str(result[3]-1) +
                   ' levels above ' + str(bunch[3]))
 
     elif int(bunch[0]) == 4:
         result = findComLead4(bunch[1], bunch[2],
                               bunch[3], bunch[4], head, childpar)
         if result != 0:
-            print(result[0])
-            print(str(result[0]) + ' is ' + str(result[1]-1) +
+            print('common leader: ' + result[0])
+            print('leader ' + str(result[0]) + ' is ' + str(result[1]-1) +
                   ' levels above ' + str(bunch[1]))
-            print(str(result[0]) + ' is ' + str(result[2]-1) +
+            print('leader ' + str(result[0]) + ' is ' + str(result[2]-1) +
                   ' levels above ' + str(bunch[2]))
-            print(str(result[0]) + ' is ' + str(result[3]-1) +
+            print('leader ' + str(result[0]) + ' is ' + str(result[3]-1) +
                   ' levels above ' + str(bunch[3]))
-            print(str(result[0]) + ' is ' + str(result[4]-1) +
+            print('leader ' + str(result[0]) + ' is ' + str(result[4]-1) +
                   ' levels above ' + str(bunch[4]))
     elif int(bunch[0]) == 5:
         result = findComLead5(
             bunch[1], bunch[2], bunch[3], bunch[4], bunch[5], head, childpar)
         if result != 0:
-            print(result[0])
-            print(str(result[0]) + ' is ' + str(result[1]-1) +
+            print('common leader: ' + result[0])
+            print('leader ' + str(result[0]) + ' is ' + str(result[1]-1) +
                   ' levels above ' + str(bunch[1]))
-            print(str(result[0]) + ' is ' + str(result[2]-1) +
+            print('leader ' + str(result[0]) + ' is ' + str(result[2]-1) +
                   ' levels above ' + str(bunch[2]))
-            print(str(result[0]) + ' is ' + str(result[3]-1) +
+            print('leader ' + str(result[0]) + ' is ' + str(result[3]-1) +
                   ' levels above ' + str(bunch[3]))
-            print(str(result[0]) + ' is ' + str(result[4]-1) +
+            print('leader ' + str(result[0]) + ' is ' + str(result[4]-1) +
                   ' levels above ' + str(bunch[4]))
-            print(str(result[0]) + ' is ' + str(result[5]-1) +
+            print('leader ' + str(result[0]) + ' is ' + str(result[5]-1) +
                   ' levels above ' + str(bunch[5]))
