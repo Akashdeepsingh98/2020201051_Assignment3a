@@ -8,6 +8,7 @@ The branch for Part B programs is named "PartB".
 - Input file will be `org.json` as stated in assignment document.
 - The json file must have the employee IDs as an integer inside string like `"002"` and `"005"` as stated in assignment document and moodle.
 - Assuming the topmost employee is at `L0` in `org.json`.
+- Provide the files with employee schedules in a folder named `employees`.
 - Input format on terminal as stated on moodle : \<number_of_employees> \<empid 1> \<empid 2> ..... \<empid n>
 - Output format as stated on Moodle:
 <br>
@@ -52,6 +53,8 @@ MM.DD.YYYY
 - The 2 dates can have different formats.
 
 - Input example: 
+<br>
+Inside date_calculator.txt
 <br>
 Date1: 10-9-2020
 <br>
