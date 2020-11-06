@@ -86,10 +86,16 @@ Date Difference: 3 Days
 
 ## Question 3
 - Input format is as stated in assignment document.
-- User must input `slot duration` from `command line` in multiples of `0.5` as stated on Moodle (0.5, 1, 1.5 etc).
 - Output file - `output.txt`.
 - Output format is as stated in assignment document.
+- Please provide `directory name` as user input for the directory where the `input files` are stored.
+- User must input `slot duration` from `command line` in multiples of `0.5` as stated on Moodle (0.5, 1, 1.5 etc).
 - If no slots available then write `no slot available`.
+- Terminal example:
+<br>
+python q3.py
+employees
+0.5
 - output.txt example:
 <br>
 Available slots: 

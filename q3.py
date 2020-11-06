@@ -271,7 +271,8 @@ def readableFree(employeelist):
 
 
 if __name__ == '__main__':
-    employeelist = readFiles('employees')
+    userempdir = input()
+    employeelist = readFiles(userempdir)
 
     employeelist = preprocess(employeelist)
 
