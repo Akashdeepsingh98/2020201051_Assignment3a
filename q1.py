@@ -28,6 +28,19 @@ def canincr(i, empancs):
     return True
 
 
+def checkisanc(i, pos, emp, empancs):
+    result = []
+    if empancs[pos][i-1] == emp:
+        result.append(empancs[pos][i-2])
+        for anc in empancs:
+            if anc == empancs[pos]:
+                result.append(1)
+            else:
+                result.append(len(anc)-1-(i-2))
+        return result
+    return None
+
+
 def findComLead2(emp1, emp2, head, childpar):
     if checkallequal([emp1, emp2], head):
         print("Leader not found")
@@ -40,19 +53,21 @@ def findComLead2(emp1, emp2, head, childpar):
         curhead2 = emp2anc[-1]
         checkheads(curhead1, head, emp1anc, childpar)
         checkheads(curhead2, head, emp2anc, childpar)
-        
+
     emp1anc.reverse()
     emp2anc.reverse()
 
     i = 0
     while canincr(i, [emp1anc, emp2anc]):
         i += 1
+    
+    result = [None*3]
+    result[0] = checkisanc(i, 0, emp1, [emp1anc, emp2anc])
+    result[1] = checkisanc(i, 1, emp2, [emp1anc, emp2anc])
 
-    if emp1anc[i-1] == emp1:
-        return [emp1anc[i-2], 1, len(emp2anc)-1 - (i - 2)]
-
-    if emp2anc[i-1] == emp2:
-        return [emp2anc[i-2], len(emp1anc)-1 - (i - 2), 1]
+    for r in result:
+        if r != None:
+            return r
 
     return [emp1anc[i-1], len(emp1anc)-1 - (i - 2), len(emp2anc)-1 - (i - 2)]
 
@@ -82,14 +97,14 @@ def findComLead3(emp1, emp2, emp3, head, childpar):
     while canincr(i, [emp1anc, emp2anc, emp3anc]):
         i += 1
 
-    if emp1anc[i-1] == emp1:
-        return [emp1anc[i-2], 1, len(emp2anc)-1-(i-2), len(emp3anc)-1-(i-2)]
+    result = [None*3]
+    result[0] = checkisanc(i, 0, emp1, [emp1anc, emp2anc, emp3anc])
+    result[1] = checkisanc(i, 1, emp2, [emp1anc, emp2anc, emp3anc])
+    result[2] = checkisanc(i, 2, emp3, [emp1anc, emp2anc, emp3anc])
 
-    if emp2anc[i-1] == emp2:
-        return [emp2anc[i-2], len(emp1anc)-1-(i-2), 1, len(emp3anc)-1-(i-2)]
-
-    if emp3anc[i-1] == emp3:
-        return [emp3anc[i-2], len(emp1anc)-1-(i-2), len(emp2anc)-1-(i-2), 1]
+    for r in result:
+        if r != None:
+            return r
 
     return [emp1anc[i-1], len(emp1anc)-1-(i-2), len(emp2anc)-1-(i-2), len(emp3anc)-1-(i-2)]
 
@@ -123,18 +138,15 @@ def findComLead4(emp1, emp2, emp3, emp4, head, childpar):
     while canincr(i, [emp1anc, emp2anc, emp3anc, emp4anc]):
         i += 1
 
-    if emp1anc[i-1] == emp1:
-        return [emp1anc[i-2], 1, len(emp2anc)-1-(i-2), len(emp3anc)-1-(i-2), len(emp4anc)-1-(i-2)]
+    result = [None*4]
+    result[0] = checkisanc(i, 0, emp1, [emp1anc, emp2anc, emp3anc, emp4anc])
+    result[1] = checkisanc(i, 1, emp2, [emp1anc, emp2anc, emp3anc, emp4anc])
+    result[2] = checkisanc(i, 2, emp3, [emp1anc, emp2anc, emp3anc, emp4anc])
+    result[3] = checkisanc(i, 3, emp4, [emp1anc, emp2anc, emp3anc, emp4anc])
 
-    if emp2anc[i-1] == emp2:
-        return [emp2anc[i-2], len(emp1anc)-1-(i-2), 1, len(emp3anc)-1-(i-2), len(emp4anc)-1-(i-2)]
-
-    if emp3anc[i-1] == emp3:
-        return [emp3anc[i-2], len(emp1anc)-1-(i-2), len(emp2anc)-1-(i-2), 1, len(emp4anc)-1-(i-2)]
-
-    if emp4anc[i-1] == emp4:
-        return [emp4anc[i-2], len(emp1anc)-1-(i-2), len(emp2anc)-1-(i-2), len(emp3anc)-1-(i-2), 1]
-
+    for r in result:
+        if r != None:
+            return r
     return [emp1anc[i-1], len(emp1anc)-1-(i-2), len(emp2anc)-1-(i-2), len(emp3anc)-1-(i-2), len(emp4anc)-1-(i-2)]
 
 
@@ -169,21 +181,21 @@ def findComLead5(emp1, emp2, emp3, emp4, emp5, head, childpar):
     i = 0
     while canincr(i, [emp1anc, emp2anc, emp3anc, emp4anc, emp5anc]):
         i += 1
+    result = [None*5]
+    result[0] = checkisanc(
+        i, 0, emp1, [emp1anc, emp2anc, emp3anc, emp4anc, emp5anc])
+    result[1] = checkisanc(
+        i, 1, emp2, [emp1anc, emp2anc, emp3anc, emp4anc, emp5anc])
+    result[2] = checkisanc(
+        i, 2, emp3, [emp1anc, emp2anc, emp3anc, emp4anc, emp5anc])
+    result[3] = checkisanc(
+        i, 3, emp4, [emp1anc, emp2anc, emp3anc, emp4anc, emp5anc])
+    result[4] = checkisanc(
+        i, 4, emp5, [emp1anc, emp2anc, emp3anc, emp4anc, emp5anc])
 
-    if emp1anc[i-1] == emp1:
-        return [emp1anc[i-2], 1, len(emp2anc)-1-(i-2), len(emp3anc)-1-(i-2), len(emp4anc)-1-(i-2), len(emp5anc)-1-(i-2)]
-
-    elif emp2anc[i-1] == emp2:
-        return [emp2anc[i-2], len(emp1anc)-1-(i-2), 1, len(emp3anc)-1-(i-2), len(emp4anc)-1-(i-2), len(emp5anc)-1-(i-2)]
-
-    elif emp3anc[i-1] == emp3:
-        return [emp3anc[i-2], len(emp1anc)-1-(i-2), len(emp2anc)-1-(i-2), 1, len(emp4anc)-1-(i-2), len(emp5anc)-1-(i-2)]
-
-    elif emp4anc[i-1] == emp4:
-        return [emp4anc[i-2], len(emp1anc)-1-(i-2), len(emp2anc)-1-(i-2), len(emp3anc)-1-(i-2), 1, len(emp5anc)-1-(i-2)]
-
-    elif emp5anc[i-1] == emp5:
-        return [emp5anc[i-2], len(emp1anc)-1-(i-2), len(emp2anc)-1-(i-2), len(emp3anc)-1-(i-2), len(emp4anc)-1-(i-2), 1]
+    for r in result:
+        if r != None:
+            return r
 
     return [emp1anc[i-1], len(emp1anc)-1-(i-2), len(emp2anc)-1-(i-2), len(emp3anc)-1-(i-2), len(emp4anc)-1-(i-2), len(emp5anc)-1-(i-2)]
 
