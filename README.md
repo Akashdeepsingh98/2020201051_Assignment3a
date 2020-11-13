@@ -5,6 +5,7 @@ Github Repo - https://github.com/Akashdeepsingh98/2020201051_Assignment3a
 The branch for Part B programs is named "PartB".
 
 ## Question 1
+- Complexity grade - A.
 - Input file will be `org.json` as stated in assignment document.
 - The json file must have the employee IDs as an integer inside string like `"002"` and `"005"` as stated in assignment document and moodle.
 - Assuming the topmost employee is at `L0` in `org.json`.
@@ -19,15 +20,20 @@ leader \<empid> is \<n> levels above employee \<empid>
 - If the leader is provided in input then output `Leader not found` as stated on Moodle.
 
 ### Changes made
-- There are significant changes.
-- There is a separate condition for either 2,3,4 or 5 employees which, owing to time constraints, could not be made better.
-- Part A had a mistake where a level was added to level count between each leader and provided employee. It has been fixed.
+- There are significant changes. Many utility functions are added.
+- "checkheads" checks if current leader of an employee is not the topmost leader and if yes then add it to the employee's ancestor.
+- "checkallequal" checks if all employees passed into function are the topmost leader.
+- "checknotallequal" checks if not all employees passed into function are the topmost leader.
+- "canincr" check if variable 'i' can be incremented. It can be only incrmented if 'i' is less than the lengths of every employee leader list and ith leader is same for all employees.
+<br>
+![Q1 Complexity](q1ss.jpg)
 
 <br>
 <br>
 <br>
 
 ## Question 2
+- Complexity grade - A.
 - Input file will be `date_calculator.txt` as stated in assignment document.
 - Possible formats for dates:
 <br>
@@ -77,14 +83,16 @@ Date Difference: 3 Days
 - The `absolute difference` between the dates is stored.
 
 ### Changes made
-- 2 lines have been added - line 36 and 37 - for checking if the first character of formats similar to MM/DD/YYYY is 'M' or not.
-- It is used for deciding whether the first digits are months or days.
+- No changes made as complexity has grade A.
+<br>
+![Q2 Complexity](q2ss.jpg)
 
 <br>
 <br>
 <br>
 
 ## Question 3
+- Complexity grade - B.
 - Input format is as stated in assignment document.
 - Output file - `output.txt`.
 - Output format is as stated in assignment document.
@@ -113,6 +121,6 @@ Slot duration: 0.5 hrs
 - If there are no slots available then the last line is replaced with `no slot available`.
 
 ### Changes made
-- There are significant changes.
-- The method for finding overlapping slots between 2 emloyees has been changed so that it more useful for 3,4,5 employees too.
-- There is a diffrerent function for handling 2,3,4 and 5 employees each which owing to time constraints could not be made better.
+- No changes made as the complexity is at B.
+<br>
+![Q3 Complexity](q3ss.JPG)

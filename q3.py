@@ -297,7 +297,7 @@ if __name__ == '__main__':
             f.write(json.dumps(emp))
             f.write('\n')
         f.write('\nSlot duration: ' + str(duration/60)+' hrs\n')
-        if result!='no slot available':
+        if result != 'no slot available':
             freedict = {}
             freedate = result[0].strftime('%d/%m/%Y')
             freestart = result[1].strftime('%I:%M%p')

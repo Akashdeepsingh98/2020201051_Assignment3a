@@ -2,7 +2,7 @@ import json
 
 
 def checkheads(curhead, head, empanc, childpar):
-    if curhead == head:
+    if curhead != head:
         empanc.append(childpar[curhead])
 
 
