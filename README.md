@@ -2,7 +2,7 @@
 
 Github Repo - https://github.com/Akashdeepsingh98/2020201051_Assignment3a
 <br>
-The branch for Part B programs is named "PartB".
+The branch for Part C programs is named "PartC".
 
 ## Question 1
 - Complexity grade - A.
